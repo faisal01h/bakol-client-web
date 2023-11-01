@@ -2027,6 +2027,11 @@ react-icons@^4.11.0:
   resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.11.0.tgz#4b0e31c9bfc919608095cc429c4f1846f4d66c65"
   integrity sha512-V+4khzYcE5EBk/BvcuYRq6V/osf11ODUM2J8hg2FDSswRrGvqiYUYPRy4OdrWaQOBj4NcpJfmHZLNaD+VH0TyA==
 
+react-international-phone@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/react-international-phone/-/react-international-phone-4.0.1.tgz#14cf253d55a9da9ce36c8d75a1c74eb43fc55ee1"
+  integrity sha512-pR8y32tCEufBsI21HC7OjJ1EGF2lpIYJa/IzrbeK37XwAvZ1756gqyqln06z7ugLhigWhl6SXO/LpT+2HAaYOA==
+
 react-is@^16.13.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
