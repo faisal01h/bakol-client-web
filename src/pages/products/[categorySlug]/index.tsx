@@ -1,20 +1,22 @@
 import StoreLayout from "@/layouts/store";
-import { checkPln, getProductsByCategory, countryCodes } from "@/utils/bakolApi";
+import { checkPln, getProductsByCategory, countryCodes, createInvoice } from "@/utils/bakolApi";
 import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { PhoneInput } from "react-international-phone";
 import 'react-international-phone/style.css';
 
 export default function ProductsByCategory() {
     let params = useParams();
+    const { push } = useRouter();
     const [ products, setProducts ] = useState([]);
     const [ category, setCategory ] = useState<any>();
     const [ activeSku, setActiveSku ] = useState();
     const [ canCheckout, setCanCheckout ] = useState(false);
-    const [ destination, setDestination ] = useState<string>();
+    const [ destination, setDestination ] = useState<string>('');
     const [ phone, setPhone ] = useState<string>('');
     const [ plnQuery, setPlnQuery ] = useState<any>();
 
@@ -34,7 +36,7 @@ export default function ProductsByCategory() {
     }, [params]);
 
     useEffect(() => {
-        if(activeSku && destination && destination !== "" && phone && phone !== "") {
+        if(activeSku && destination && destination !== "" && phone && phone !== "" && phone.length > 5) {
             setCanCheckout(true);
         } else {
             setCanCheckout(false);
@@ -47,6 +49,18 @@ export default function ProductsByCategory() {
             console.log(e)
             setPlnQuery(e.data)
         })
+    }
+
+    function submit(e:any) {
+        e.preventDefault();
+        createInvoice(activeSku, phone, destination)
+        .then((e) => {
+            console.log('inv', e);
+            push(`/checkout/${e.data.transaction.invoice}`);
+        })
+        // sessionStorage.setItem('phone', phone.replace('+', ''));
+        // sessionStorage.setItem('destination', destination);
+        
     }
 
     return (
@@ -139,7 +153,7 @@ export default function ProductsByCategory() {
                 {
                     products.length > 0 ?
                     <div className="flex items-center justify-center mb-10">
-                        <button disabled={canCheckout} className={`px-4 py-2 rounded-md ${canCheckout ? "bg-emerald-300 hover:bg-emerald-500 hover:text-white cursor-pointer text-emerald-800 font-semibold" : "text-gray-600 bg-gray-300 cursor-default"}`}>Checkout</button>
+                        <button disabled={!canCheckout} onClick={e=>submit(e)} type="submit" className={`px-4 py-2 rounded-md ${canCheckout ? "bg-emerald-300 hover:bg-emerald-500 hover:text-white cursor-pointer text-emerald-800 font-semibold" : "text-gray-600 bg-gray-300 cursor-default"}`}>Checkout</button>
                     </div>: ""
                 }
             </div>

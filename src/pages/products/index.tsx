@@ -34,16 +34,6 @@ export default function Products() {
                                         </div>
                                         <div className="flex flex-col px-2 py-1">
                                             <h2 className="font-semibold text-sm">{product.name}</h2>
-                                            {/* <div className="text-sm">
-                                                {
-                                                    <div className="flex flex-col">
-                                                        <div className="flex flex-wrap gap-2">
-                                                            <span className="text-xs text-gray-500">Rp{Intl.NumberFormat('id-ID').format(product.selling_price)}</span>
-                                                            <span className="text-xs bg-emerald-200 text-emerald-700 font-bold px-1 rounded">-{(100-(product.discounted_price/product.selling_price)*100).toFixed(0)}%</span>
-                                                        </div>
-                                                    </div>
-                                                }
-                                            </div> */}
                                             <span className="transition-transform group-hover:translate-x-10">👉</span>
                                         </div>
                                     </div>
