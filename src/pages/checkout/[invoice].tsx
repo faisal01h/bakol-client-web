@@ -14,10 +14,10 @@ export default function ProductSku() {
             name: 'xendit.qris',
             display: 'QRIS'
         },
-        {
-            name: 'xendit.ewallet.dana',
-            display: 'DANA'
-        },
+        // {
+        //     name: 'xendit.ewallet.dana',
+        //     display: 'DANA'
+        // },
     ]);
     const [ selectedMethod, setSelectedMethod ] = useState<any>();
     const [ data, setData ] = useState<any>();
@@ -107,9 +107,12 @@ export default function ProductSku() {
                                     })
                                 }
                             </div>
-                            <div>
-                                <button onClick={pay}>Bayar</button>
-                                <button onClick={cancel}>Batal</button>
+                            <div className="flex gap-3 mt-5">
+                                {
+                                    selectedMethod? <button onClick={pay} className="bg-emerald-300 px-3 py-1 rounded-md hover:shadow hover:bg-emerald-400">Bayar</button>
+                                    : "Pilih metode pembayaran untuk melanjutkan"
+                                }
+                                <button onClick={cancel} className="text-rose-500 hover:text-rose-600 hover:underline">Batal</button>
                             </div>
                         </div>
                         : showQr ?
