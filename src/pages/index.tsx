@@ -32,12 +32,12 @@ export default function Home() {
                 products.map((product, i) => {
                   return (
                       <Link href={`products/${product.slug}`} id={product.slug} key={i} className="hover:scale-105 transition-all transform group">
-                          <div className="w-32 h-48 bg-gray-300 rounded-lg flex flex-col">
-                              <div className="h-56 bg-emerald-800 rounded-t-lg">
-                                  img
+                          <div className="w-32 h-48 rounded-lg flex flex-col">
+                              <div className={`h-56 bg-emerald-800 rounded-lg `} style={{backgroundImage: `${product.image ? `url("${process.env.NEXT_PUBLIC_FILE_URL+'/storage/'+product.image}")` : ""}`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}>
+                                  {/* <img src={process.env.NEXT_PUBLIC_FILE_URL+'/storage/'+product.image} /> */}
                               </div>
-                              <div className="flex flex-col px-2 py-1 group-hover:py-10 transition-all">
-                                  <h2 className="font-semibold text-sm">{product.name}</h2>
+                              <div className="absolute bottom-0 w-full flex flex-col -mt-5 px-2 py-1 group-hover:py-10 z-10 transition-all bg-gradient-to-t from-gray-700 via-gray-600 to-transparent text-white rounded-b-lg">
+                                  <h2 className="font-semibold text-sm group-hover:text-md group-hover:font-bold transition-all">{product.name}</h2>
                               </div>
                           </div>
                       </Link>
