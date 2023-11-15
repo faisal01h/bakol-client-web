@@ -11,7 +11,7 @@ export default function Navbar() {
                 <Link href={'/products'} className="hover:font-semibold">
                     Produk
                 </Link>
-                <Link href={'/products'} className="hover:font-semibold">
+                <Link href={'/track'} className="hover:font-semibold">
                     Lacak Pesanan
                 </Link>
                 <Link href={'/products'} className="hover:font-semibold">

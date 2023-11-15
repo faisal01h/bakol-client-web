@@ -89,3 +89,11 @@ export function getTransaction(invoice: any) {
     })
     .catch(console.error)
 }
+
+export function trackTransaction(query: any) {
+    return axios.get(`${process.env.NEXT_PUBLIC_HOST_URL}/api/transaction/track/${query}`)
+    .then((response) => {
+        return response.data;
+    })
+    .catch(console.error)
+}

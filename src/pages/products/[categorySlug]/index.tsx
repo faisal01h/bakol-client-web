@@ -8,6 +8,8 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { PhoneInput } from "react-international-phone";
 import 'react-international-phone/style.css';
+import AOS from 'aos';
+import "aos/dist/aos.css";
 
 export default function ProductsByCategory() {
     let params = useParams();
@@ -19,6 +21,14 @@ export default function ProductsByCategory() {
     const [ destination, setDestination ] = useState<string>('');
     const [ phone, setPhone ] = useState<string>('');
     const [ plnQuery, setPlnQuery ] = useState<any>();
+    const [ loading, setLoading ] = useState(true);
+
+    useEffect(() => {
+        AOS.init({
+            easing: "ease-in-out-cubic",
+            duration: 300
+        })
+    }, [])
 
     useEffect(() => {
         if(params && params.categorySlug) {
@@ -30,6 +40,7 @@ export default function ProductsByCategory() {
                 if(e?.category) {
                     setCategory(e.category);
                 }
+                setLoading(false);
                 
             })
         }
@@ -74,7 +85,7 @@ export default function ProductsByCategory() {
                         <h1 className="font-bold text-3xl">{category?.name}</h1>
                     </div>
                 </div>
-                <div className="lg:-mt-5 flex flex-row flex-wrap justify-center">
+                <div className="lg:-mt-5 flex flex-row flex-wrap justify-center" data-aos="fade-down">
                     <div className="flex flex-col items-center w-fit bg-white shadow rounded-l-md border-r px-5 py-2">
                         <label htmlFor="phone">Masukkan nomor WhatsApp</label>
                         <div className="text-lg rounded-full px-3 py-1 font-mono w-72 text-center flex items-center justify-center">
@@ -109,7 +120,7 @@ export default function ProductsByCategory() {
                 </div>
                 {
                     plnQuery ?
-                    <div className="mt-4 flex justify-center">
+                    <div className="mt-4 flex justify-center" data-aos="fade-down">
                         <div className=" bg-emerald-300 rounded-md">
                             <div className="flex flex-col items-center">
                                 <div className="bg-emerald-400 rounded-t-md px-5 w-64 text-center">
@@ -130,6 +141,7 @@ export default function ProductsByCategory() {
                             return (
                                 <div 
                                     key={i} 
+                                    data-aos="fade-up"
                                     className={`${activeSku === product.sku? "bg-emerald-600 shadow shadow-emerald-300 text-white" : ""} group cursor-pointer shadow w-56 hover:bg-emerald-500 px-3 py-2 rounded-md transition-all hover:scale-105`}
                                     onClick={() => {
                                         setActiveSku(product.sku)
@@ -147,6 +159,8 @@ export default function ProductsByCategory() {
                                 </div>
                             )
                         })
+                        : loading ?
+                        <p>Loading...</p>
                         : <p>Tidak ada produk yang ditemukan</p>
                     }
                 </div>

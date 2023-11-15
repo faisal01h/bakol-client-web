@@ -1,5 +1,6 @@
 import StoreLayout from "@/layouts/store";
 import { getProducts, getCategories } from "@/utils/bakolApi";
+import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -18,6 +19,10 @@ export default function Products() {
 
     return (
         <StoreLayout>
+            <Head>
+                <title>Semua Produk</title>
+                <meta name="description" content="Temukan berbagai pilihan produk digital dengan harga terbaik di BeliBakol. Nikmati kemudahan transaksi, berbagai metode pembayaran, dan layanan pelanggan yang responsif." />
+            </Head>
             <div className="px-8 lg:px-40 py-8 bg-gray-50 text-gray-900">
                 <div>
                     <h1 className="font-bold text-2xl">Semua Produk</h1>
