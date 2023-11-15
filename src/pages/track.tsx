@@ -72,7 +72,7 @@ export default function Track() {
             transactions.map((e, i) => {
                 return (
                     <div key={i} data-aos="fade-right" className='border shadow rounded-md px-3 py-1'>
-                        <span className='font-bold' onClick={e=>navigator.clipboard.writeText(e.currentTarget.textContent)}>{e.invoice}</span>
+                        <span className='font-bold'>{e.invoice}</span>
                         <div className='flex justify-between'>
                             <div className='flex flex-col'>
                                 <span>{e.product.name}</span>
