@@ -50,20 +50,21 @@ export default function Track() {
         <meta name="description" content="Temukan berbagai pilihan produk digital dengan harga terbaik di BeliBakol. Nikmati kemudahan transaksi, berbagai metode pembayaran, dan layanan pelanggan yang responsif." />
         <meta name="keywords" content="belibakol, bakol, pulsa, listrik, token, telco, voucher, game, paket data" />
       </Head>
-      <div className='flex flex-col gap-5 py-5'>
+      <div className='flex flex-col gap-5 py-5 px-8'>
         <div>
 
         </div>
         <div className='flex flex-col gap-3 items-center' data-aos="fade-down">
             <h2 className='text-center text-lg font-semibold'>Lacak Pesanan</h2>
-            <form method='get'>
-                <div className='flex flex-col'>
-                    <label htmlFor="query">Masukkan Nomor WhatsApp atau Invoice Pesanan Anda</label>
-                    <input type="text" id="query" name="query"className="border border-gray-300 text-lg rounded-md px-3 py-1 font-mono w-72 text-center" />
+            <form method='get' className='flex flex-col justify-center items-center'>
+                <label htmlFor="query" className='text-center'>Masukkan Nomor WhatsApp atau Invoice Pesanan Anda</label>
+                <div className='flex sm:flex-col lg:flex-row flex-wrap justify-center items-center gap-3'>
+                    <input type="text" id="query" name="query" placeholder="cth: BKL_123456789 atau 628123456789" className="border border-gray-300 text-lg rounded-md px-3 py-1 w-72 text-center" />
+                    <div>
+                        <button type="submit" className='bg-emerald-300 w-fit py-1 px-3 rounded-md hover:bg-emerald-400 transition-all'>Cari</button>
+                    </div>
                 </div>
-                <div>
-                    <button type="submit">Cari</button>
-                </div>
+                
             </form>
         </div>
         <div className='flex flex-col px-8 lg:px-40 gap-3 mb-5'>
@@ -71,7 +72,7 @@ export default function Track() {
             transactions.length > 0 ?
             transactions.map((e, i) => {
                 return (
-                    <div key={i} data-aos="fade-right" className='border shadow rounded-md px-3 py-1'>
+                    <Link href={`/checkout/${e.invoice}`} key={i} data-aos="fade-right" className='border shadow rounded-md px-3 py-1 hover:scale-105 hover:bg-emerald-300 transition-all'>
                         <span className='font-bold'>{e.invoice}</span>
                         <div className='flex justify-between'>
                             <div className='flex flex-col'>
@@ -84,7 +85,7 @@ export default function Track() {
                                 <span className='font-semibold'>Rp{Intl.NumberFormat('id').format(e.selling_price)},-</span>
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 )
             }) : 
             loading ? <p>Loading...</p>

@@ -11,7 +11,7 @@ export const countryCodes = [
 
 export function getProducts(query?: ProductSearchQuery) {
     // let products: Array<any> = [];
-    return axios.get(`${process.env.NEXT_PUBLIC_HOST_URL}/api/products?name=${query?.name}&price=${query?.price}&category=${query?.category}`)
+    return axios.get(`${process.env.NEXT_PUBLIC_HOST_URL}/v1/products?name=${query?.name}&price=${query?.price}&category=${query?.category}`)
     .then((response) => {
         return response.data;
     })
@@ -19,7 +19,7 @@ export function getProducts(query?: ProductSearchQuery) {
 }
 
 export function getProduct(sku: any) {
-    return axios.get(`${process.env.NEXT_PUBLIC_HOST_URL}/api/products/details/${sku}`)
+    return axios.get(`${process.env.NEXT_PUBLIC_HOST_URL}/v1/products/details/${sku}`)
     .then((response) => {
         return response.data;
     })
@@ -27,7 +27,7 @@ export function getProduct(sku: any) {
 }
 
 export function getCategories(name?: string) {
-    return axios.get(`${process.env.NEXT_PUBLIC_HOST_URL}/api/products/categories${name? `?name=${name}` : ""}`)
+    return axios.get(`${process.env.NEXT_PUBLIC_HOST_URL}/v1/products/categories${name? `?name=${name}` : ""}`)
     .then((response) => {
         return response.data;
     })
@@ -35,7 +35,7 @@ export function getCategories(name?: string) {
 }
 
 export function getProductsByCategory(category: string | string[]) {
-    return axios.get(`${process.env.NEXT_PUBLIC_HOST_URL}/api/products/category/${category}`)
+    return axios.get(`${process.env.NEXT_PUBLIC_HOST_URL}/v1/products/category/${category}`)
     .then((response) => {
         return response.data;
     })
@@ -43,7 +43,7 @@ export function getProductsByCategory(category: string | string[]) {
 }
 
 export function checkPln(meterNumber: any) {
-    return axios.get(`${process.env.NEXT_PUBLIC_HOST_URL}/api/products/pln?destination=${meterNumber}`)
+    return axios.get(`${process.env.NEXT_PUBLIC_HOST_URL}/v1/products/pln?destination=${meterNumber}`)
     .then((response) => {
         return response.data;
     })
@@ -59,7 +59,7 @@ export function csrf() {
 }
 
 export function createInvoice(sku: any, phone: any, destination: any) {
-    return axios.post(`${process.env.NEXT_PUBLIC_HOST_URL}/api/checkout`, {
+    return axios.post(`${process.env.NEXT_PUBLIC_HOST_URL}/v1/checkout`, {
         sku,
         phone,
         destination
@@ -72,7 +72,7 @@ export function createInvoice(sku: any, phone: any, destination: any) {
 }
 
 export function createPayment(invoice: any, payment_method: any) {
-    return axios.post(`${process.env.NEXT_PUBLIC_HOST_URL}/api/transaction/pay`, {
+    return axios.post(`${process.env.NEXT_PUBLIC_HOST_URL}/v1/transaction/pay`, {
         invoice,
         payment_method
     })
@@ -83,7 +83,7 @@ export function createPayment(invoice: any, payment_method: any) {
 }
 
 export function getTransaction(invoice: any) {
-    return axios.get(`${process.env.NEXT_PUBLIC_HOST_URL}/api/transaction/check?invoice=${invoice}`)
+    return axios.get(`${process.env.NEXT_PUBLIC_HOST_URL}/v1/transaction/check?invoice=${invoice}`)
     .then((response) => {
         return response.data;
     })
@@ -91,7 +91,7 @@ export function getTransaction(invoice: any) {
 }
 
 export function trackTransaction(query: any) {
-    return axios.get(`${process.env.NEXT_PUBLIC_HOST_URL}/api/transaction/track/${query}`)
+    return axios.get(`${process.env.NEXT_PUBLIC_HOST_URL}/v1/transaction/track/${query}`)
     .then((response) => {
         return response.data;
     })

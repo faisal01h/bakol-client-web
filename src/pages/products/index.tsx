@@ -11,7 +11,6 @@ export default function Products() {
     useEffect(() => {
         getCategories()
         .then((e) => {
-            console.log(e)
             setProducts(e.data);
             setLoading(false);
         })

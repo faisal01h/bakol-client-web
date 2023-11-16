@@ -141,7 +141,6 @@ export default function ProductsByCategory() {
                             return (
                                 <div 
                                     key={i} 
-                                    data-aos="fade-up"
                                     className={`${activeSku === product.sku? "bg-emerald-600 shadow shadow-emerald-300 text-white" : ""} group cursor-pointer shadow w-56 hover:bg-emerald-500 px-3 py-2 rounded-md transition-all hover:scale-105`}
                                     onClick={() => {
                                         setActiveSku(product.sku)
