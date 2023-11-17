@@ -26,7 +26,7 @@ export function getProduct(sku: any) {
     .catch(console.error)
 }
 
-export function getCategories(name?: string) {
+export function getCategories(name?: string | null) {
     return axios.get(`${process.env.NEXT_PUBLIC_HOST_URL}/v1/products/categories${name? `?name=${name}` : ""}`)
     .then((response) => {
         return response.data;
@@ -95,5 +95,7 @@ export function trackTransaction(query: any) {
     .then((response) => {
         return response.data;
     })
-    .catch(console.error)
+    .catch((err) => {
+        console.error(err);
+    })
 }

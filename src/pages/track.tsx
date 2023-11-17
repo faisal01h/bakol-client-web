@@ -8,6 +8,7 @@ import Head from 'next/head'
 import AOS from 'aos';
 import "aos/dist/aos.css";
 import { useSearchParams } from 'next/navigation'
+import { ToastContainer, toast } from 'react-toastify'
 
 export default function Track() {
   const params = useSearchParams();
@@ -28,13 +29,16 @@ export default function Track() {
             let query = params.get('query');
             trackTransaction(query)
             .then((e) => {
-                console.log(e)
+                if(!e) {
+                    throw new Error("Not found");
+                }
                 setTransactions(e)
                 if(e.length === 0) {
                     setNotFound(true)
                 } else setNotFound(false)
             })
-            .catch(() => {
+            .catch((e) => {
+                console.error(e)
                 setNotFound(true)
             })
             .finally(() => {
@@ -50,6 +54,7 @@ export default function Track() {
         <meta name="description" content="Temukan berbagai pilihan produk digital dengan harga terbaik di BeliBakol. Nikmati kemudahan transaksi, berbagai metode pembayaran, dan layanan pelanggan yang responsif." />
         <meta name="keywords" content="belibakol, bakol, pulsa, listrik, token, telco, voucher, game, paket data" />
       </Head>
+      <ToastContainer />
       <div className='flex flex-col gap-5 py-5 px-8'>
         <div>
 

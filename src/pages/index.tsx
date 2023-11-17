@@ -7,6 +7,7 @@ import { getCategories } from '@/utils/bakolApi'
 import Head from 'next/head'
 import AOS from 'aos';
 import "aos/dist/aos.css";
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Home() {
   const [ products, setProducts ] = useState<Array<any>>([]);
@@ -21,7 +22,17 @@ export default function Home() {
       getCategories()
       .then((e) => {
           setProducts(e.data);
-          setLoading(false);
+      })
+      .catch((e) => {
+        console.error(e)
+        toast.error(e.message, {
+          position: "bottom-right",
+          theme: "colored",
+          toastId: "err"
+        })
+      })
+      .finally(() => {
+        setLoading(false);
       })
     }, [])
   
@@ -32,6 +43,7 @@ export default function Home() {
         <meta name="description" content="Temukan berbagai pilihan produk digital dengan harga terbaik di BeliBakol. Nikmati kemudahan transaksi, berbagai metode pembayaran, dan layanan pelanggan yang responsif." />
         <meta name="keywords" content="belibakol, bakol, pulsa, listrik, token, telco, voucher, game, paket data" />
       </Head>
+      <ToastContainer />
       <div className='flex flex-col gap-5'>
         <div>
 

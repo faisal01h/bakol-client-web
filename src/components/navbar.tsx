@@ -14,7 +14,7 @@ export default function Navbar() {
                 <Link href={'/track'} className="hover:font-semibold">
                     Lacak Pesanan
                 </Link>
-                <Link href={'/products'} className="hover:font-semibold">
+                <Link href={'/contact-us'} className="hover:font-semibold">
                     Hubungi Kami
                 </Link>
             </div>

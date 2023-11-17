@@ -1,0 +1,13 @@
+import StoreLayout from "@/layouts/store";
+export default function ErrorNotFound() {
+    return (
+        <StoreLayout>
+            <div className="flex flex-col items-center justify-center h-[80vh]">
+                <div>
+                    <h1 className="text-4xl font-bold">Hubungi Kami</h1>
+                </div>
+                <div>Coming soon</div>
+            </div>
+        </StoreLayout>
+    )
+}

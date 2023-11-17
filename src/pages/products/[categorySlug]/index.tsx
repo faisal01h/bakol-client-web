@@ -3,25 +3,47 @@ import { checkPln, getProductsByCategory, countryCodes, createInvoice } from "@/
 import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { PhoneInput } from "react-international-phone";
 import 'react-international-phone/style.css';
 import AOS from 'aos';
 import "aos/dist/aos.css";
+import { GetServerSideProps } from "next";
 
-export default function ProductsByCategory() {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const slug = ctx.params?.categorySlug as string;
+
+    let data = await getProductsByCategory(slug);
+    
+    
+    if(data) {
+        return {
+            props: {
+                products: data.data,
+                category: data.category
+            }
+        }
+    }
+
+    return {
+        notFound: true,
+    }
+}
+
+export default function ProductsByCategory(props: {products : Array<any>, category : any}) {
     let params = useParams();
     const { push } = useRouter();
-    const [ products, setProducts ] = useState([]);
-    const [ category, setCategory ] = useState<any>();
+    // const [ products, setProducts ] = useState([]);
+    // const [ category, setCategory ] = useState<any>();
     const [ activeSku, setActiveSku ] = useState();
     const [ canCheckout, setCanCheckout ] = useState(false);
     const [ destination, setDestination ] = useState<string>('');
     const [ phone, setPhone ] = useState<string>('');
     const [ plnQuery, setPlnQuery ] = useState<any>();
-    const [ loading, setLoading ] = useState(true);
+    const [ loading, setLoading ] = useState(false);
+    console.log(props.products)
 
     useEffect(() => {
         AOS.init({
@@ -30,21 +52,21 @@ export default function ProductsByCategory() {
         })
     }, [])
 
-    useEffect(() => {
-        if(params && params.categorySlug) {
-            getProductsByCategory(params.categorySlug)
-            .then((e) => {
-                if(e?.data) {
-                    setProducts(e.data);
-                }
-                if(e?.category) {
-                    setCategory(e.category);
-                }
-                setLoading(false);
+    // useEffect(() => {
+    //     if(params && params.categorySlug) {
+    //         getProductsByCategory(params.categorySlug)
+    //         .then((e) => {
+    //             if(e?.data) {
+    //                 setProducts(e.data);
+    //             }
+    //             if(e?.category) {
+    //                 setCategory(e.category);
+    //             }
+    //             setLoading(false);
                 
-            })
-        }
-    }, [params]);
+    //         })
+    //     }
+    // }, [params]);
 
     useEffect(() => {
         if(activeSku && destination && destination !== "" && phone && phone !== "" && phone.length > 5) {
@@ -77,12 +99,12 @@ export default function ProductsByCategory() {
     return (
         <StoreLayout>
             <Head>
-                <title>{category ? category.name : "BeliBakol"}</title>
+                <title>{props.category ? props.category.name : "BeliBakol"}</title>
             </Head>
             <div>
                 <div className="h-56 bg-emerald-300 flex flex-col justify-end">
                     <div className="p-10">
-                        <h1 className="font-bold text-3xl">{category?.name}</h1>
+                        <h1 className="font-bold text-3xl">{props.category?.name}</h1>
                     </div>
                 </div>
                 <div className="lg:-mt-5 flex flex-row flex-wrap justify-center" data-aos="fade-down">
@@ -109,10 +131,10 @@ export default function ProductsByCategory() {
                         </div>
                     </div>
                     <div className="flex flex-col items-center w-fit bg-white shadow rounded-r-md px-5 py-2">
-                        <label htmlFor="destination">{category?.prompt}</label>
+                        <label htmlFor="destination">{props.category?.prompt}</label>
                         <input onChange={e=>setDestination(e.target.value)} className="border border-gray-300 text-lg rounded-md px-3 py-1 font-mono w-72 text-center" id="destination" type="text" />
                         {
-                            category && category.slug === "pln" ?
+                            props.category && props.category.slug === "pln" ?
                             <button className="bg-emerald-300 mt-3 px-3 rounded-md text-sm py-1 font-semibold text-emerald-800" onClick={plnInquiry}>Cek ID Pelanggan</button> : ""
                         }
                     </div>
@@ -136,8 +158,8 @@ export default function ProductsByCategory() {
                 }
                 <div className="flex flex-row flex-wrap justify-center gap-5 py-8 lg:px-40 px-8">
                     {
-                        products.length > 0 ?
-                        products.map((product: any, i) => {
+                        props.products.length > 0 ?
+                        props.products.map((product: any, i) => {
                             return (
                                 <div 
                                     key={i} 
@@ -164,7 +186,7 @@ export default function ProductsByCategory() {
                     }
                 </div>
                 {
-                    products.length > 0 ?
+                    props.products.length > 0 ?
                     <div className="flex items-center justify-center mb-10">
                         <button disabled={!canCheckout} onClick={e=>submit(e)} type="submit" className={`px-4 py-2 rounded-md ${canCheckout ? "bg-emerald-300 hover:bg-emerald-500 hover:text-white cursor-pointer text-emerald-800 font-semibold" : "text-gray-600 bg-gray-300 cursor-default"}`}>Checkout</button>
                     </div>: ""

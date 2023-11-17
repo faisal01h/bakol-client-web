@@ -2,19 +2,34 @@ import StoreLayout from "@/layouts/store";
 import { getProducts, getCategories } from "@/utils/bakolApi";
 import Head from "next/head";
 import Link from "next/link";
+import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Products() {
     const [ products, setProducts ] = useState<Array<any>>([]);
     const [ loading, setLoading ] = useState<boolean>(true);
 
+    let params = useSearchParams();
+
     useEffect(() => {
-        getCategories()
+        console.log(params.get('name'))
+        getCategories(params.get('name'))
         .then((e) => {
             setProducts(e.data);
+        })
+        .catch((e) => {
+            console.error(e)
+            toast.error(e.message, {
+                position: "bottom-right",
+                theme: "colored",
+                toastId: "err"
+            })
+        })
+        .finally(() => {
             setLoading(false);
         })
-    }, [])
+    }, [params])
 
     return (
         <StoreLayout>
@@ -22,6 +37,7 @@ export default function Products() {
                 <title>Semua Produk</title>
                 <meta name="description" content="Temukan berbagai pilihan produk digital dengan harga terbaik di BeliBakol. Nikmati kemudahan transaksi, berbagai metode pembayaran, dan layanan pelanggan yang responsif." />
             </Head>
+            <ToastContainer />
             <div className="px-8 lg:px-40 py-8 bg-gray-50 text-gray-900">
                 <div>
                     <h1 className="font-bold text-2xl">Semua Produk</h1>
